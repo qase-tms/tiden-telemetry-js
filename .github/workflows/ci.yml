@@ -23,5 +23,8 @@ jobs:
           cache: npm
           cache-dependency-path: ${{ matrix.pkg }}/package-lock.json
       - run: npm ci
+      - run: npm run lint
       - run: npm run build
       - run: npm test
+      - name: Publish-correctness lint (publint + are-the-types-wrong)
+        run: npm run lint:publish

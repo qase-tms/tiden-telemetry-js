@@ -28,7 +28,7 @@ export const tidenSourceMaps = createUnplugin<Options>((opts) => ({
       try {
         await upload({ fileName: p.fileName, debugId: p.debugId, mapBytes: readFileSync(p.mapPath) })
       } catch (e) {
-        // eslint-disable-next-line no-console
+         
         console.warn(`[tiden] source-map upload failed for ${p.fileName}: ${(e as Error).message}`)
       }
     }

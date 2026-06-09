@@ -1,4 +1,4 @@
-import type { Breadcrumb } from './types'
+import type { Breadcrumb } from './types.js'
 
 // A ring buffer of breadcrumbs plus best-effort instrumentation of console,
 // fetch, clicks and navigation. A re-entrancy guard prevents the SDK's own

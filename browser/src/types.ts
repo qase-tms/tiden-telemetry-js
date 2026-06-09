@@ -1,4 +1,4 @@
-// Wire types: the Sentry-compatible envelope event our ingest edge already parses.
+// Wire types: the envelope event our ingest edge already parses.
 // We emit `exception.values[]` (canonical), `debug_meta.images[]` (for source-map
 // matching), and the Layer-2 sections the UI renders.
 
@@ -32,7 +32,7 @@ export interface ExceptionValue {
   stacktrace?: { frames: Frame[] }
 }
 
-export interface SentryEvent {
+export interface TidenEvent {
   event_id: string
   timestamp: number
   platform: 'javascript'
@@ -57,7 +57,7 @@ export interface InitOptions {
   /** When false (default), strip likely-PII before send. */
   sendDefaultPii?: boolean
   /** Last-chance hook to mutate/drop an event. Return null to drop. */
-  beforeSend?: (event: SentryEvent) => SentryEvent | null
+  beforeSend?: (event: TidenEvent) => TidenEvent | null
   /** Drop events whose top frame URL matches any of these. */
   denyUrls?: (string | RegExp)[]
   maxBreadcrumbs?: number

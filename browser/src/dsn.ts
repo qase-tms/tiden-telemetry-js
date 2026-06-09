@@ -1,8 +1,8 @@
-import type { ParsedDsn } from './types'
+import type { ParsedDsn } from './types.js'
 
 // parseDsn turns `http://<publicKey>@host[:port]/<projectId>` into the envelope
-// ingest URL the existing edge parses: `/api/<projectId>/envelope/?sentry_key=...`
-// (the edge reads the `sentry_key` query param — we stay wire-compatible).
+// ingest URL the existing edge parses: `/api/<projectId>/envelope/?tiden_key=...`
+// (the edge reads the `tiden_key` query param — we stay wire-compatible).
 export function parseDsn(dsn: string): ParsedDsn {
   const u = new URL(dsn)
   const publicKey = u.username
@@ -10,6 +10,6 @@ export function parseDsn(dsn: string): ParsedDsn {
   if (!publicKey || !projectId) {
     throw new Error('@tiden/browser: invalid DSN (expected http://<key>@host/<projectId>)')
   }
-  const ingestUrl = `${u.protocol}//${u.host}/api/${projectId}/envelope/?sentry_key=${publicKey}`
+  const ingestUrl = `${u.protocol}//${u.host}/api/${projectId}/envelope/?tiden_key=${publicKey}`
   return { ingestUrl, publicKey, projectId }
 }

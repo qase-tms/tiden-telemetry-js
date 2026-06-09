@@ -1,4 +1,6 @@
-const CONTENT_TYPE = 'application/x-sentry-envelope'
+// The envelope media type the ingest backend accepts. Part of the wire contract
+// (see contract.test.ts).
+export const CONTENT_TYPE = 'application/x-tiden-envelope'
 
 // Module-level rate-limit gate set when the server returns 429.
 let rateLimitedUntil = 0

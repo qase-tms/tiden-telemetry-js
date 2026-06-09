@@ -4,14 +4,14 @@ import { framesFromError } from './stacktrace'
 import { serializeEnvelope } from './envelope'
 import { scrubEvent } from './scrub'
 import { debugImages } from './debugids'
-import type { SentryEvent } from './types'
+import type { TidenEvent } from './types'
 
 describe('parseDsn', () => {
-  it('extracts key, project, ingest url (wire-compatible sentry_key)', () => {
+  it('extracts key, project, ingest url (wire-compatible tiden_key)', () => {
     const d = parseDsn('http://abc123@localhost:1143/a623b12f-de24-465c-b0ad-2cf76a958121')
     expect(d.publicKey).toBe('abc123')
     expect(d.projectId).toBe('a623b12f-de24-465c-b0ad-2cf76a958121')
-    expect(d.ingestUrl).toBe('http://localhost:1143/api/a623b12f-de24-465c-b0ad-2cf76a958121/envelope/?sentry_key=abc123')
+    expect(d.ingestUrl).toBe('http://localhost:1143/api/a623b12f-de24-465c-b0ad-2cf76a958121/envelope/?tiden_key=abc123')
   })
   it('throws on a malformed dsn', () => {
     expect(() => parseDsn('http://localhost/')).toThrow()
@@ -36,7 +36,7 @@ describe('framesFromError', () => {
 
 describe('serializeEnvelope', () => {
   it('emits header / item-with-length / body', () => {
-    const ev = { event_id: 'e1', timestamp: 1, platform: 'javascript', level: 'error' } as SentryEvent
+    const ev = { event_id: 'e1', timestamp: 1, platform: 'javascript', level: 'error' } as TidenEvent
     const out = serializeEnvelope(ev, '2026-01-01T00:00:00Z')
     const lines = out.trimEnd().split('\n')
     expect(lines.length).toBe(3)
@@ -48,7 +48,7 @@ describe('serializeEnvelope', () => {
 
 describe('scrubEvent', () => {
   it('redacts secret headers + PII when sendDefaultPii=false', () => {
-    const ev: SentryEvent = {
+    const ev: TidenEvent = {
       event_id: 'e', timestamp: 1, platform: 'javascript', level: 'error',
       message: 'failed for user a@b.com',
       request: { url: 'https://x', headers: { Authorization: 'Bearer s', Accept: 'json' } },
@@ -60,7 +60,7 @@ describe('scrubEvent', () => {
     expect(ev.message).not.toContain('a@b.com')
   })
   it('keeps PII when sendDefaultPii=true (headers still redacted)', () => {
-    const ev: SentryEvent = {
+    const ev: TidenEvent = {
       event_id: 'e', timestamp: 1, platform: 'javascript', level: 'error',
       message: 'user a@b.com',
       request: { url: 'https://x', headers: { Cookie: 'sid=1' } },

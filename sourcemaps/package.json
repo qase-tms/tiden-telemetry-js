@@ -1,29 +1,62 @@
 {
   "name": "@tiden/sourcemaps",
-  "version": "0.1.0",
-  "description": "Tiden source-map bundler plugin (unplugin). Injects debug-ids and uploads source maps to a Tiden product at build time. No @sentry/* dependency.",
+  "version": "0.1.1",
+  "description": "Tiden source-map bundler plugin (unplugin). Injects debug-ids and uploads source maps to a Tiden product at build time. No third-party error-SDK dependency.",
+  "keywords": [
+    "tiden",
+    "source-maps",
+    "debug-id",
+    "unplugin",
+    "vite",
+    "webpack",
+    "rollup",
+    "esbuild"
+  ],
+  "homepage": "https://github.com/qase-tms/tiden-js/tree/main/sourcemaps",
+  "bugs": "https://github.com/qase-tms/tiden-js/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qase-tms/tiden-js.git",
+    "directory": "sourcemaps"
+  },
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
-    "./vite": { "types": "./dist/index.d.ts", "import": "./dist/index.js" }
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint": "eslint . --max-warnings 0",
+    "lint:publish": "publint --strict && attw --pack --profile esm-only",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "unplugin": "^2.1.0"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.0",
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^22.0.0",
+    "eslint": "^10.4.1",
+    "globals": "^16.4.0",
+    "publint": "^0.3.0",
     "typescript": "^5.6.0",
-    "vitest": "^2.1.0",
-    "@types/node": "^22.0.0"
+    "typescript-eslint": "^8.59.3",
+    "vitest": "^2.1.0"
   },
   "license": "MIT",
-  "publishConfig": { "access": "public" }
+  "publishConfig": {
+    "access": "public"
+  }
 }

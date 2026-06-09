@@ -1,7 +1,20 @@
 {
   "name": "@tiden/browser",
-  "version": "0.1.0",
-  "description": "Tiden error-tracking browser SDK. Emits the Sentry-compatible envelope wire format to a Tiden ingest endpoint, with zero Sentry dependency.",
+  "version": "0.1.1",
+  "description": "Tiden error-tracking browser SDK. Emits the envelope wire format to a Tiden ingest endpoint, with no third-party error-SDK dependency.",
+  "keywords": [
+    "tiden",
+    "error-tracking",
+    "browser",
+    "sdk"
+  ],
+  "homepage": "https://github.com/qase-tms/tiden-js/tree/main/browser",
+  "bugs": "https://github.com/qase-tms/tiden-js/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qase-tms/tiden-js.git",
+    "directory": "browser"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -12,18 +25,29 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "rm -rf dist && tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint": "eslint . --max-warnings 0",
+    "lint:publish": "publint --strict && attw --pack --profile esm-only",
+    "prepublishOnly": "npm run build"
   },
   "dependencies": {
     "stacktrace-parser": "^0.1.11"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.0",
+    "@eslint/js": "^9.39.4",
+    "eslint": "^10.4.1",
+    "globals": "^16.4.0",
+    "publint": "^0.3.0",
     "typescript": "^5.6.0",
+    "typescript-eslint": "^8.59.3",
     "vitest": "^2.1.0"
   },
   "license": "MIT",
