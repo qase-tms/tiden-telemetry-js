@@ -1,4 +1,4 @@
-const CONTENT_TYPE = 'application/x-tiden-envelope'
+const CONTENT_TYPE = 'application/x-sentry-envelope'
 
 // Module-level rate-limit gate set when the server returns 429.
 let rateLimitedUntil = 0

@@ -1,4 +1,4 @@
-import type { TidenEvent } from './types'
+import type { SentryEvent } from './types'
 
 // Client-side scrubbing before send (design §6). Mirrors the server's
 // defense-in-depth: redact secret-bearing request headers, and (unless
@@ -13,7 +13,7 @@ const PII_PATTERNS: RegExp[] = [
   /\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b/g, // JWTs
 ]
 
-export function scrubEvent(ev: TidenEvent, sendDefaultPii: boolean): TidenEvent {
+export function scrubEvent(ev: SentryEvent, sendDefaultPii: boolean): SentryEvent {
   if (ev.request?.headers) {
     for (const k of Object.keys(ev.request.headers)) {
       if (HEADER_DENYLIST.has(k.toLowerCase())) ev.request.headers[k] = '[Filtered]'

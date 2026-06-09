@@ -1,15 +1,7 @@
 {
   "name": "@tiden/sourcemaps",
   "version": "0.1.0",
-  "description": "Tiden source-map bundler plugin (unplugin). Injects debug-ids and uploads source maps to a Tiden product at build time. No third-party error-SDK dependency.",
-  "keywords": ["tiden", "source-maps", "debug-id", "unplugin", "vite", "webpack", "rollup", "esbuild"],
-  "homepage": "https://github.com/qase-tms/tiden-js/tree/main/sourcemaps",
-  "bugs": "https://github.com/qase-tms/tiden-js/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/qase-tms/tiden-js.git",
-    "directory": "sourcemaps"
-  },
+  "description": "Tiden source-map bundler plugin (unplugin). Injects debug-ids and uploads source maps to a Tiden product at build time. No @sentry/* dependency.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -22,8 +14,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "prepublishOnly": "npm run build"
+    "test": "vitest run"
   },
   "dependencies": {
     "unplugin": "^2.1.0"

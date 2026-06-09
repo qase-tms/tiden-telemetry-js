@@ -5,7 +5,7 @@ import { scrubEvent } from './scrub'
 import { serializeEnvelope } from './envelope'
 import { send } from './transport'
 import * as breadcrumbs from './breadcrumbs'
-import type { ExceptionValue, InitOptions, ParsedDsn, TidenEvent } from './types'
+import type { ExceptionValue, InitOptions, ParsedDsn, SentryEvent } from './types'
 
 const SDK = { name: 'tiden.javascript.browser', version: '0.1.0' }
 
@@ -49,7 +49,7 @@ export class Client {
   }
 
   // capture is wrapped so a failure in our own code can never bubble into the host.
-  private capture(partial: Partial<TidenEvent>, unload = false): void {
+  private capture(partial: Partial<SentryEvent>, unload = false): void {
     try {
       const cap = this.opts.maxEventsPerPage ?? 100
       if (this.sent >= cap) return
@@ -72,8 +72,8 @@ export class Client {
     }
   }
 
-  private buildEvent(partial: Partial<TidenEvent>): TidenEvent {
-    const ev: TidenEvent = {
+  private buildEvent(partial: Partial<SentryEvent>): SentryEvent {
+    const ev: SentryEvent = {
       event_id: eventId(),
       timestamp: Date.now() / 1000,
       platform: 'javascript',
@@ -92,7 +92,7 @@ export class Client {
     return ev
   }
 
-  private denied(ev: TidenEvent): boolean {
+  private denied(ev: SentryEvent): boolean {
     const urls = this.opts.denyUrls
     if (!urls || !urls.length) return false
     const frames = ev.exception?.values[0]?.stacktrace?.frames
@@ -123,7 +123,7 @@ function eventId(): string {
   return Array.from(b, (x) => x.toString(16).padStart(2, '0')).join('')
 }
 
-function dedupKey(ev: TidenEvent): string {
+function dedupKey(ev: SentryEvent): string {
   const x = ev.exception?.values[0]
   if (x) {
     const frames = x.stacktrace?.frames

@@ -1,12 +1,12 @@
 import { Client } from './client'
 import type { InitOptions } from './types'
 
-export type { InitOptions, TidenEvent, Frame, Breadcrumb } from './types'
+export type { InitOptions, SentryEvent, Frame, Breadcrumb } from './types'
 export { Client } from './client'
 
 let client: Client | undefined
 
-// Tiden is the public singleton API. No third-party error SDK anywhere in the consumer's
+// Tiden is the public singleton API. No `sentry` anywhere in the consumer's
 // code: `import { Tiden } from '@tiden/browser'; Tiden.init({ dsn })`.
 export const Tiden = {
   init(opts: InitOptions): Client {

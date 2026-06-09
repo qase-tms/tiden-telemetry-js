@@ -1,15 +1,7 @@
 {
   "name": "@tiden/browser",
   "version": "0.1.0",
-  "description": "Tiden error-tracking browser SDK. Emits the envelope wire format to a Tiden ingest endpoint, with no third-party error-SDK dependency.",
-  "keywords": ["tiden", "error-tracking", "browser", "sdk"],
-  "homepage": "https://github.com/qase-tms/tiden-js/tree/main/browser",
-  "bugs": "https://github.com/qase-tms/tiden-js/issues",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/qase-tms/tiden-js.git",
-    "directory": "browser"
-  },
+  "description": "Tiden error-tracking browser SDK. Emits the Sentry-compatible envelope wire format to a Tiden ingest endpoint, with zero Sentry dependency.",
   "type": "module",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -25,8 +17,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "prepublishOnly": "npm run build"
+    "test": "vitest run"
   },
   "dependencies": {
     "stacktrace-parser": "^0.1.11"

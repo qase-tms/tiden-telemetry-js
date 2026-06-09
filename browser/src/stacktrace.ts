@@ -3,7 +3,7 @@ import type { Frame } from './types'
 
 // framesFromError parses Error.stack across browsers via stacktrace-parser (the
 // hard cross-browser part we deliberately do NOT hand-roll) and converts to
-// stack frames. stacktrace-parser yields newest-call-first; we order
+// Sentry frames. stacktrace-parser yields newest-call-first; Sentry orders
 // oldest-first (the crashing call last), so we reverse.
 export function framesFromError(err: unknown): Frame[] {
   const stack = err instanceof Error ? err.stack : undefined
