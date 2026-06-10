@@ -1,6 +1,6 @@
 {
   "name": "@tiden/telemetry-sourcemaps",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Tiden source-map bundler plugin (unplugin). Injects debug-ids and uploads source maps to a Tiden product at build time. No third-party error-SDK dependency.",
   "keywords": [
     "tiden",
