@@ -1,6 +1,6 @@
 {
   "name": "@tiden/telemetry-browser",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Tiden error-tracking browser SDK. Emits the envelope wire format to a Tiden ingest endpoint, with no third-party error-SDK dependency.",
   "keywords": [
     "tiden",
@@ -16,13 +16,19 @@
     "directory": "browser"
   },
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "./dist/cjs/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
     }
   },
   "files": [
@@ -30,11 +36,11 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "rm -rf dist && tsc -p tsconfig.json",
+    "build": "rm -rf dist && tsc -p tsconfig.json && tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > dist/cjs/package.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "eslint . --max-warnings 0",
-    "lint:publish": "publint --strict && attw --pack --profile esm-only",
+    "lint:publish": "publint --strict && attw --pack",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
