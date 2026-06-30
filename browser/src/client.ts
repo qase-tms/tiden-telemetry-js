@@ -103,13 +103,33 @@ export class Client {
   private installGlobalHandlers(): void {
     if (typeof window === 'undefined') return
     window.addEventListener('error', (e: ErrorEvent) => {
-      if (e.error) this.captureException(e.error)
+      if (e.error && !isNetworkError(e.error)) this.captureException(e.error)
     })
     window.addEventListener('unhandledrejection', (e: PromiseRejectionEvent) => {
       const r: unknown = e.reason
+      if (isNetworkError(r)) return
       this.captureException(r instanceof Error ? r : new Error(String(r)))
     })
   }
+}
+
+// Browser network-fetch failures surface as one of these (Chrome/Edge, Firefox,
+// Safari respectively). We must never auto-report them from the global handlers:
+// when our own ingest delivery is blocked (ad/tracker extension) or unreachable,
+// the failing send is a "Failed to fetch" — capturing it would POST it straight
+// back to the same dead ingest, a self-referential telemetry loop. They are also
+// unactionable noise for an error tracker. Explicit Client.captureException is
+// unaffected — only the automatic handlers skip these.
+const NETWORK_ERROR_MESSAGES = [
+  'failed to fetch',
+  'networkerror when attempting to fetch resource.',
+  'load failed',
+]
+
+function isNetworkError(err: unknown): boolean {
+  const msg = (err as { message?: unknown } | null)?.message
+  if (typeof msg !== 'string') return false
+  return NETWORK_ERROR_MESSAGES.includes(msg.trim().toLowerCase())
 }
 
 function eventId(): string {
