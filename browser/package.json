@@ -1,6 +1,6 @@
 {
   "name": "@tiden/telemetry-browser",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Tiden error-tracking browser SDK. Emits the envelope wire format to a Tiden ingest endpoint, with no third-party error-SDK dependency.",
   "keywords": [
     "tiden",
