@@ -29,7 +29,8 @@ export { makeUploader } from './upload.js'
 // After the bundle is written, inject debug-ids into the emitted JS, write them
 // into the maps, and upload each map (two-phase) to Tiden. Failures warn but
 // never fail the build. If filesToDeleteAfterUpload is set, matching files are
-// removed once uploads complete (skipping any map whose upload failed).
+// removed once uploads complete (skipping any map whose upload failed);
+// otherwise a warning reminds that the uploaded maps still sit in the output.
 export const tidenSourceMaps = createUnplugin<Options>((opts) => ({
   name: 'tiden-sourcemaps',
   async writeBundle() {
@@ -48,8 +49,32 @@ export const tidenSourceMaps = createUnplugin<Options>((opts) => ({
       }
     }
     await deleteAfterUpload(opts.filesToDeleteAfterUpload, failed)
+    const leakWarning = mapLeakWarning(processed.length - failed.size, dir, opts.filesToDeleteAfterUpload)
+
+    if (leakWarning) console.warn(leakWarning)
   },
 }))
+
+// mapLeakWarning builds the loud warning printed when maps were uploaded but
+// the user configured no cleanup: the .map files stay in the build output and
+// ship with the deploy, where a public map exposes the original source. Returns
+// null when cleanup is configured (non-empty patterns) or nothing uploaded.
+// Warning only — the build still succeeds. Exported for testing.
+export function mapLeakWarning(
+  uploadedCount: number,
+  dir: string,
+  patterns: string | string[] | undefined,
+): string | null {
+  const hasCleanup = Array.isArray(patterns) ? patterns.length > 0 : Boolean(patterns)
+  if (uploadedCount === 0 || hasCleanup) return null
+  return (
+    `[tiden] WARNING: ${uploadedCount} source map(s) uploaded but left in "${dir}" — ` +
+    `they will ship with your deploy, and a public .map exposes your original source. ` +
+    `Set filesToDeleteAfterUpload (e.g. ['${dir}/**/*.map']) to delete them after upload, ` +
+    `or strip *.map in your deploy step. ` +
+    `https://www.npmjs.com/package/@tiden/telemetry-sourcemaps#cleaning-up-source-maps`
+  )
+}
 
 // deleteAfterUpload removes files matching `patterns`, skipping any whose upload
 // failed (their resolved paths are in `failedUploads`). It never throws — like
