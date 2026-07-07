@@ -92,24 +92,6 @@ Two ways to avoid that:
 - Or handle it in your deploy: configure the server to deny `*.map`, or remove
   them in a post-build CI step.
 
-If the plugin uploads maps and `filesToDeleteAfterUpload` is not set, it prints
-a build-time warning (the build still succeeds) — silence it by picking one of
-the options above.
-
-## Server / SSR builds
-
-Source maps are not only a frontend concern. If your SSR or Node server bundle
-goes through the same bundler with `sourcemap` enabled (a Vite SSR build, a
-bundled API server), its `.map` files reconstruct your **server-side** source —
-request handlers, business logic, sometimes embedded configuration. Treat them
-like client maps:
-
-- Don't generate maps for server builds in production unless you actually use
-  them (most bundlers default to off).
-- If you do generate them, delete them the same way — a second plugin instance
-  with `outDir` pointed at the server output, or `*.map` cleanup in CI.
-- Never serve a server build's output directory publicly.
-
 ## License
 
 [MIT](https://github.com/qase-tms/tiden-telemetry-js/blob/main/LICENSE)
