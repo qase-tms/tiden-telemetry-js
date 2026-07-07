@@ -1,0 +1,21 @@
+sourcemaps/package.json
+  s_fb9ec78684640a::t_d408efc1dbe328 3
+sourcemaps/package-lock.json
+  s_fb9ec78684640a::t_2c340a21384acc 3,9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "fb58d254c6235a8e32fcccff9a4603cdc2d2a925",
+  "prompts": {},
+  "sessions": {
+    "s_fb9ec78684640a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a80730d6-cb08-4ea2-9611-3d320c475bce",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Nikolay Pisarev <npisarev@qase.io>"
+    }
+  }
+}
