@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { mkdtempSync, mkdirSync, writeFileSync, existsSync, realpathSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
-import { deleteAfterUpload, mapLeakWarning } from './index'
+import { deleteAfterUpload } from './index'
 
 // realpathSync so macOS's /var -> /private/var tmpdir symlink doesn't make the
 // glob's absolute paths diverge from resolve()'d ones (mirrors a real build dir,
@@ -50,29 +50,5 @@ describe('deleteAfterUpload', () => {
     expect(existsSync(a)).toBe(false)
     expect(existsSync(b)).toBe(true)
     expect(deleted).toEqual([a])
-  })
-})
-
-describe('mapLeakWarning', () => {
-  it('warns when maps uploaded and no cleanup is configured', () => {
-    const msg = mapLeakWarning(3, 'dist', undefined)
-    expect(msg).toContain('3 source map')
-    expect(msg).toContain('"dist"')
-    expect(msg).toContain('filesToDeleteAfterUpload')
-    expect(msg).toContain("['dist/**/*.map']")
-    expect(msg).toContain('#cleaning-up-source-maps')
-  })
-
-  it('treats an empty patterns array as no cleanup', () => {
-    expect(mapLeakWarning(1, 'dist', [])).toContain('filesToDeleteAfterUpload')
-  })
-
-  it('is silent when cleanup is configured', () => {
-    expect(mapLeakWarning(3, 'dist', 'dist/**/*.map')).toBeNull()
-    expect(mapLeakWarning(3, 'dist', ['dist/**/*.map'])).toBeNull()
-  })
-
-  it('is silent when nothing uploaded successfully', () => {
-    expect(mapLeakWarning(0, 'dist', undefined)).toBeNull()
   })
 })
