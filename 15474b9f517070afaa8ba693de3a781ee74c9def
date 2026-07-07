@@ -1,0 +1,29 @@
+browser/package.json
+  s_4c3f8bce75d041::t_a1758991eab303 3
+  s_4c3f8bce75d041::t_c527e3f17b8842 19,24-31
+  s_4c3f8bce75d041::t_ae95ff97c2b467 39,43
+browser/tsconfig.cjs.json
+  s_4c3f8bce75d041::t_96942c3d727427 1-8
+sourcemaps/package.json
+  s_4c3f8bce75d041::t_151f20da04fb43 3
+  s_4c3f8bce75d041::t_6116bc2e4aae1d 43,47
+  s_4c3f8bce75d041::t_876e6fdbd0c4c5 24,29-36
+sourcemaps/tsconfig.cjs.json
+  s_4c3f8bce75d041::t_7ad715acd7aa7e 1-8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "15474b9f517070afaa8ba693de3a781ee74c9def",
+  "prompts": {},
+  "sessions": {
+    "s_4c3f8bce75d041": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ff472d44-608c-4ac5-a8ee-f1d6b049bcf6",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Nikolay Pisarev <npisarev@qase.io>"
+    }
+  }
+}
