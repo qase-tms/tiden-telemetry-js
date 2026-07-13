@@ -30,6 +30,7 @@ export function scrubEvent(ev: TidenEvent, sendDefaultPii: boolean): TidenEvent 
     for (const b of ev.breadcrumbs?.values ?? []) {
       if (b.message) b.message = redact(b.message)
     }
+    if (ev.extra) ev.extra = redactDeep(ev.extra) as Record<string, unknown>
   }
   return ev
 }
@@ -38,4 +39,18 @@ function redact(s: string): string {
   let out = s
   for (const re of PII_PATTERNS) out = out.replace(re, '[Filtered]')
   return out
+}
+
+// redactDeep walks an arbitrary (already depth/size-bounded) value and
+// redacts PII in every string leaf, so free-form data like `extra` gets the
+// same protection as the message/exception/breadcrumb strings above.
+function redactDeep(value: unknown): unknown {
+  if (typeof value === 'string') return redact(value)
+  if (Array.isArray(value)) return value.map(redactDeep)
+  if (value !== null && typeof value === 'object') {
+    const out: Record<string, unknown> = {}
+    for (const [k, v] of Object.entries(value as Record<string, unknown>)) out[k] = redactDeep(v)
+    return out
+  }
+  return value
 }

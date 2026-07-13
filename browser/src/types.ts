@@ -46,6 +46,8 @@ export interface TidenEvent {
   user?: Record<string, unknown>
   tags?: Record<string, string>
   contexts?: Record<string, Record<string, unknown>>
+  /** Bounded, scrubbed extra data — e.g. a serialized non-Error exception value. */
+  extra?: Record<string, unknown>
   debug_meta?: { images: DebugImage[] }
   sdk?: { name: string; version: string }
 }
