@@ -1,0 +1,21 @@
+browser/package.json
+  s_44cd12c44e67c8::t_490ec994888f84 3
+browser/package-lock.json
+  s_44cd12c44e67c8::t_6f51890cbe6f87 3,9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "8f4a5fc0ed95b337ae6af8bd4293ab133ce4aa67",
+  "prompts": {},
+  "sessions": {
+    "s_44cd12c44e67c8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "aba05b1a-aae1-49db-a1ac-0edaa93c9097",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Nikolay Pisarev <npisarev@qase.io>"
+    }
+  }
+}
