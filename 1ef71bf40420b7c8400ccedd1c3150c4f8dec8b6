@@ -1,0 +1,27 @@
+sourcemaps/package.json
+  s_b9f9d3f67ecdca::t_2f6926351730cc 3
+sourcemaps/README.md
+  s_b9f9d3f67ecdca::t_ec1debeb55fad7 66
+  s_b9f9d3f67ecdca::t_89a337a35a8829 78-94
+  s_b9f9d3f67ecdca::t_48e19d90890a6f 26-28,35-37
+sourcemaps/src/index.test.ts
+  s_b9f9d3f67ecdca::t_871cbec9ce02e3 1-54
+sourcemaps/src/index.ts
+  s_b9f9d3f67ecdca::t_e57b6a57815d28 2-3,5,14-22,31-32,40,45-46,50,54-92
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.7",
+  "base_commit_sha": "1ef71bf40420b7c8400ccedd1c3150c4f8dec8b6",
+  "prompts": {},
+  "sessions": {
+    "s_b9f9d3f67ecdca": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "32343d95-9a40-4020-a5c7-88ed327f383b",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Nikolay Pisarev <npisarev@qase.io>"
+    }
+  }
+}
