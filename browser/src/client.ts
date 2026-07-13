@@ -5,9 +5,12 @@ import { scrubEvent } from './scrub.js'
 import { serializeEnvelope } from './envelope.js'
 import { send } from './transport.js'
 import * as breadcrumbs from './breadcrumbs.js'
+import { exceptionFromUnknown, type ExceptionKind } from './exception.js'
 import type { ExceptionValue, InitOptions, ParsedDsn, TidenEvent } from './types.js'
 
-const SDK = { name: 'tiden.javascript.browser', version: '0.1.0' }
+// Keep in sync with package.json "version" (see sdk-version.test.ts, which
+// fails the build on drift). Reported on every event as sdk.version.
+const SDK = { name: 'tiden.javascript.browser', version: '0.1.5' }
 
 export class Client {
   private readonly dsn: ParsedDsn
@@ -34,14 +37,22 @@ export class Client {
   }
 
   captureException(err: unknown, unload = false): void {
-    const frames = framesFromError(err)
-    const e = err as { name?: string; message?: string }
+    this.reportException(err, err, 'exception', unload)
+  }
+
+  // reportException builds the exception+extra from `serializeFrom` (the
+  // real thrown/rejected value — never stringified away) while taking the
+  // stacktrace from `stackFrom`, which for a non-Error promise rejection is a
+  // synthetic Error created only to capture a stack.
+  private reportException(serializeFrom: unknown, stackFrom: unknown, kind: ExceptionKind, unload: boolean): void {
+    const frames = framesFromError(stackFrom)
+    const { type, value, extra } = exceptionFromUnknown(serializeFrom, kind)
     const ex: ExceptionValue = {
-      type: (e && e.name) || 'Error',
-      value: (e && e.message) || String(err),
+      type,
+      value,
       stacktrace: frames.length ? { frames } : undefined,
     }
-    this.capture({ exception: { values: [ex] } }, unload)
+    this.capture({ exception: { values: [ex] }, ...(extra ? { extra } : {}) }, unload)
   }
 
   captureMessage(message: string, level = 'info'): void {
@@ -108,7 +119,11 @@ export class Client {
     window.addEventListener('unhandledrejection', (e: PromiseRejectionEvent) => {
       const r: unknown = e.reason
       if (isNetworkError(r)) return
-      this.captureException(r instanceof Error ? r : new Error(String(r)))
+      // A non-Error reason has no stack of its own; a synthetic Error only
+      // supplies a stacktrace — the reason itself still drives serialization
+      // so a non-Error rejection never collapses to "[object Object]".
+      const stackFrom = r instanceof Error ? r : new Error(String(r))
+      this.reportException(r, stackFrom, 'promise rejection', false)
     })
   }
 }
