@@ -1,0 +1,21 @@
+browser/src/client.ts
+  s_44cd12c44e67c8::t_c163b77d5f6733 11-13
+browser/src/sdk-version.test.ts
+  s_44cd12c44e67c8::t_5bca9d557fb325 1-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "3995f9da091f1d60ea4460d311d8e169964d64c7",
+  "prompts": {},
+  "sessions": {
+    "s_44cd12c44e67c8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "aba05b1a-aae1-49db-a1ac-0edaa93c9097",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Nikolay Pisarev <npisarev@qase.io>"
+    }
+  }
+}
