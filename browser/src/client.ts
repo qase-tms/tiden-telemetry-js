@@ -8,7 +8,9 @@ import * as breadcrumbs from './breadcrumbs.js'
 import { exceptionFromUnknown, type ExceptionKind } from './exception.js'
 import type { ExceptionValue, InitOptions, ParsedDsn, TidenEvent } from './types.js'
 
-const SDK = { name: 'tiden.javascript.browser', version: '0.1.0' }
+// Keep in sync with package.json "version" (see sdk-version.test.ts, which
+// fails the build on drift). Reported on every event as sdk.version.
+const SDK = { name: 'tiden.javascript.browser', version: '0.1.5' }
 
 export class Client {
   private readonly dsn: ParsedDsn
