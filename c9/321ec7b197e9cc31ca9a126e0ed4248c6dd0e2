@@ -1,0 +1,19 @@
+sourcemaps/README.md
+  s_22a7b7fc0542c2::t_b9f0bd65d6c811 33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c9321ec7b197e9cc31ca9a126e0ed4248c6dd0e2",
+  "prompts": {},
+  "sessions": {
+    "s_22a7b7fc0542c2": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "73ba5bb4-6d9b-4c0f-bc7d-a92d6f0effc0",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "prostoandrei <avaganov@qase.io>"
+    }
+  }
+}
