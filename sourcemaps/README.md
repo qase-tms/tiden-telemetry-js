@@ -30,7 +30,7 @@ export default defineConfig({
     tidenSourceMaps.vite({
       url: 'https://app.tiden.ai',          // your Tiden API URL
       productId: process.env.TIDEN_PRODUCT_ID!,
-      authToken: process.env.TIDEN_AUTH_TOKEN!, // build-time only — keep it secret
+      authToken: process.env.TIDEN_API_TOKEN!,  // build-time only — keep it secret
       release: 'my-app@1.2.3',
       // Delete the maps from the build output once they're uploaded, so they're
       // never shipped to production.
